@@ -80,7 +80,7 @@ export const searchFlights = async ({
     if (error?.code === 'ClientError' || error?.response?.statusCode >= 400) {
       return {
         success: false,
-        error: 'Flight search failed. Please check your dates and try again.'
+        error: error?.description[0]?.title + ': ' + error?.description[0]?.detail +"."
       };
     }
 

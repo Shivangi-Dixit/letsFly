@@ -92,6 +92,18 @@ Visit: http://localhost:3000
 - **Clear Error Handling** — Surface relevant Amadeus errors cleanly in the UI (INVALID DATE, O/D overlap, QUOTA_EXCEEDED).
 - **Responsive UI** — Mobile-first design with MUI, animations and accessible components.
 
+## ✅ Flight Search Page — Validations (Client & Server) ✅
+
+- **Client-side validations (UI):**
+  - **Required fields:** `origin` (IATA code), `destination` (IATA code), `departureDate`. `returnDate` is required when `tripType === 'ROUND_TRIP'`.
+  - **Dates:** Departure must be on or after today; return must be on or after the departure date. The UI `DatePicker` uses `minDate` to prevent past selections and ensure return >= departure. The **Search** button is disabled until required fields are set.
+  - **Origin / Destination:** Origin and destination must be different.
+  - **Passengers:** Adults: 1–10 (default 1). Children: 0–10. Infants: 0–10. Passenger controls enforce min/max values in the UI. 
+  - **Travel class:** Must be one of `ECONOMY`, `PREMIUM_ECONOMY`, `BUSINESS`, `FIRST`.
+  - **Non-stop:** Boolean flag represented in the request as `nonStop`.
+
+- **Server-side validations:**
+  - Request schema requires valid `origin`, `destination`, and `departureDate` (`YYYY-MM-DD`). `returnDate` required for round trips and must satisfy `returnDate >= departureDate`.
 
 ---
 
@@ -130,18 +142,28 @@ curl -X POST http://localhost:5000/api/flights/search \
   -d '{
     "origin":"DEL",
     "destination":"MUC",
-    "departureDate":"2026-01-15,
+    "departureDate":"2026-01-15",
     "returnDate":"2026-01-20",
     "adults":1,
     "nonStop":false,
     "travelClass":"ECONOMY"
   }'
 ```
+
+Example error response (client-friendly, JSON):
+```json
+{
+  "success": false,
+  "error": {
+    "code": "INVALID_DATE",
+    "message": "Departure date must be today or in the future."
+  }
+}
 ```
 
 Notes:
 - Use `YYYY-MM-DD` for dates. Return trips require both `departureDate` and `returnDate`.
-- The backend relays Amadeus errors; the UI displays friendly guidance.
+- The backend relays Amadeus errors and validation errors using a structured `{ code, message }` shape so the UI can show precise and friendly messages (e.g., `INVALID_DATE`, `INVALID_DATA_RECEIVED`, `QUOTA_EXCEEDED`).
 
 
 ---

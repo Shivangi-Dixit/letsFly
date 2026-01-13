@@ -224,3 +224,21 @@ npm start
 - **Optimize performance & observability** — Add response caching, request batching, structured logging, metrics, and error tracing (Prometheus/Grafana or similar).
 - **Accessibility & internationalization** — Ensure WCAG compliance, keyboard navigation, ARIA roles, and add i18n/localization support.
 - **Future features** — Multi-city searches, price alerts/notifications, saved itineraries, admin analytics dashboard, and CI-driven deployment pipelines.
+
+---
+
+## 🖼 Screenshots
+
+Below are a few screenshots from the app demonstrating the main UI and states:
+
+![Main screen](Screenshots/main-screen.png)
+*Main screen — search form and overview.*
+
+![Search results](Screenshots/search-results.png)
+*Search results showing flight offers and prices.*
+
+![Filters](Screenshots/filters.png)
+*Filters panel with non-stop and travel class options.*
+
+![Loading state](Screenshots/loading.png)
+*Loading state shown while fetching results.*

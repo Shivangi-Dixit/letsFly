@@ -11,7 +11,8 @@ export const validateFlightSearch = (req: Request, res: Response, next: NextFunc
     children: Joi.number().min(0).default(0),
     infants: Joi.number().min(0).default(0),
     nonStop: Joi.boolean().default(false),
-    travelClass: Joi.string().valid('ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST').optional()
+    travelClass: Joi.string().valid('ECONOMY', 'PREMIUM_ECONOMY', 'BUSINESS', 'FIRST').optional(),
+    currencyCode: Joi.string().length(3).optional()
   });
 
   const { error } = schema.validate(req.body);

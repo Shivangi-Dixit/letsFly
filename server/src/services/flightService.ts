@@ -12,6 +12,7 @@ interface FlightSearchParams {
   infants?: number;
   nonStop?: boolean;
   travelClass?: string;
+  currencyCode?: string;
 }
 
 interface ApiResponse {
@@ -29,7 +30,8 @@ export const searchFlights = async ({
   children = 0,
   infants = 0,
   nonStop = false,
-  travelClass = 'ECONOMY'
+  travelClass = 'ECONOMY',
+  currencyCode = 'USD'
 }: FlightSearchParams): Promise<ApiResponse> => {
   try {
     const params: any = {
@@ -40,7 +42,8 @@ export const searchFlights = async ({
       children,
       infants,
       nonStop,
-      travelClass
+      travelClass,
+      currencyCode
     };
 
     if (returnDate) {

@@ -34,6 +34,7 @@ import { styles } from './FlightSearchPage.styles';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatDateForAPI } from '../../utils/dateHelpers';
 import EmptyState from '../empty-state/EmptyState';
+import { useAutoCurrency } from '../../hooks/useAutoCurrency';
 interface Props {
   onSearch: (params: any) => void;
     showEmptyState?: boolean;
@@ -51,6 +52,7 @@ const FlightSearchPage: React.FC<Props> = ({ onSearch, showEmptyState }) => {
   const [infants, setInfants] = useState(0);
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [travelClass, setTravelClass] = useState<'ECONOMY' | 'PREMIUM_ECONOMY' | 'BUSINESS' | 'FIRST'>('ECONOMY');
+  const currencyCode = useAutoCurrency();
 
   const handlePassengerClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -74,6 +76,7 @@ const FlightSearchPage: React.FC<Props> = ({ onSearch, showEmptyState }) => {
       infants: infants,
       nonStop: nonStopOnly,
       travelClass: travelClass,
+      currencyCode: currencyCode
     };
     onSearch(params);
   };
